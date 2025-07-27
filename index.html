@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<!-- Import necessary libraries from Google APIs, PyScript website -->
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge, chrome=1">
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+
+<!-- Style adjustments -->
+<style> 
+    body {
+    	font-family: 'Montserrat';
+    	font-size: 20px;
+    	text-align: center;
+    	font-weight: bold;
+        color: black;
+  	}
+    
+    .container {
+      text-align: center;
+    }
+    .btn {
+    	display: inline-block;
+    	font-size: 22px;
+      padding: 0.5em 1em;
+      border: none;
+      text-align: center;
+      background: white;
+      left: 50%;
+    }
+    
+    .btn:hover {
+      color: white;
+      transition: .5s ease-out;
+    }
+
+    .pca:hover {
+      background: #18de50;
+    }
+    
+    .tsne:hover {
+      background: #223dd4;
+    }
+    .choose:hover {
+      background: white;
+      color: black;
+    }
+    
+</style>
+<body>
+  
+<!-- Only accept HDF5 file types -->
+<label for="myH5File">
+  Upload an H5 file here!
+</label>
+<input type="file" class="btn choose" accept=".h5, .hdf5" id="myH5File">
+<br><br>
+
+<!-- allow the user to choose between PCA and t-SNE -->
+<div class="container">
+  <h3> Please choose a dimensionality reduction method: </h3>
+  <button id="pca button" class="btn pca">PCA</button>
+  <button id="tsne button" class="btn tsne">T-SNE</button>
+</div>
+
+
+<!--import packages -->
+<py-config style="color: transparent; user-select: none;">
+  packages = ["pandas", "scikit-learn", "matplotlib", "anndata", "disable_warnings", "mpld3"]
+</py-config>
+
+<!-- enable download -->
+<script>
+  function createLink(dataURL, id) {
+    a = document.getElementById(id);
+    a.href = dataURL;
+  }
+</script>
+
+<!-- main Python code -->
+<py-script src="main.py"></py-script>
+
+
+<!-- PCA static and interactive plots, show if PCA selected-->
+<div id="pca_matplotlib" style="display: none;">
+    <a class="btn pca" id="pca interactive link" href="snippet.html" download="pca_interactive.html">Download an interactive rendering of PCA here!</a>
+    <br><br><br>
+    <a id="pca download link" download="pca plot.png">Click here!</a>
+</div>
+
+<!-- t-SNE static plot, show if t-SNE selected -->
+<div id="tsne_matplotlib" style="display: none;">
+    <a class="btn tsne" id="tsne interactive link" href="snippet.html" download="tsne_interactive.html">Download an interactive rendering of t-SNE here!</a>
+    <br><br><br>
+    <a id="tsne download link" download="tsne plot.png"></a>
+</div>
+<p id="comment" style="display: none;">To use this viewer, either play around with the interactive plot to see your data come to life, or save the static image generated! To do this, either click on the image, or alternatively, take a screenshot!</p>
+</html>
